@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\Auth\AuthController;
 use App\Http\Controllers\Api\V1\User\Package\PackageCategoryController;
+use App\Http\Controllers\Api\V1\User\Package\PackageController;
 
 // use App\Http\Controllers\History\UserHistoryController;
 // use App\Http\Controllers\Invoice\InvoiceController;
@@ -24,6 +25,12 @@ Route::middleware('auth:apiUser')->group(function () {
 
         // Pacakage
         Route::apiResource('package-categories', PackageCategoryController::class)->only([
+            'index',
+            'store',
+            'update',
+            'destroy'
+        ]);
+        Route::apiResource('package', PackageController::class)->only([
             'index',
             'store',
             'update',

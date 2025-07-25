@@ -18,4 +18,9 @@ class PackageCategory extends Model
         'created_at',
         'updated_at',
     ];
+
+    public function packages()
+    {
+        return $this->hasMany(Package::class);
+    }
 }
