@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\Auth\AuthController;
+use App\Http\Controllers\Api\V1\User\Package\PackageCategoryController;
+
 // use App\Http\Controllers\History\UserHistoryController;
 // use App\Http\Controllers\Invoice\InvoiceController;
 // use App\Http\Controllers\Ticket\UserTicketController;
@@ -19,6 +21,14 @@ Route::prefix('auth')->group(function () {
 // User
 Route::middleware('auth:apiUser')->group(function () {
     Route::prefix('user')->group(function () {
+
+        // Pacakage
+        Route::apiResource('package-categories', PackageCategoryController::class)->only([
+            'index',
+            'store',
+            'update',
+            'destroy'
+        ]);
 
         // // TICKET
         // Route::get('/tickets/{id}', [UserTicketController::class, 'show'])->name('user.ticket.show');
