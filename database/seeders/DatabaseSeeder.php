@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Database\Seeders\Package\PackageAddOnSeeder;
 use Database\Seeders\Package\PackageCategorySeeder;
 use Database\Seeders\Package\PackageSeeder;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -17,11 +18,12 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call([
-            UserSeeder::class,
+            // UserSeeder::class,
 
             // Package
-            PackageCategorySeeder::class,
-            PackageSeeder::class
+            // PackageCategorySeeder::class,
+            PackageAddOnSeeder::class,
+            // PackageSeeder::class
         ]);
     }
 }

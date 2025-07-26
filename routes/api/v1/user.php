@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\Auth\AuthController;
+use App\Http\Controllers\Api\V1\User\Package\PackageAddOnController;
 use App\Http\Controllers\Api\V1\User\Package\PackageCategoryController;
 use App\Http\Controllers\Api\V1\User\Package\PackageController;
 
@@ -25,6 +26,12 @@ Route::middleware('auth:apiUser')->group(function () {
 
         // Pacakage
         Route::apiResource('package-categories', PackageCategoryController::class)->only([
+            'index',
+            'store',
+            'update',
+            'destroy'
+        ]);
+        Route::apiResource('package-add-ons', PackageAddOnController::class)->only([
             'index',
             'store',
             'update',
