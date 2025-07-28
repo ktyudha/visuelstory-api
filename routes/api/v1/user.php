@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\V1\Auth\AuthController;
+use App\Http\Controllers\Api\V1\User\Auth\AuthController;
 use App\Http\Controllers\Api\V1\User\Package\PackageAddOnController;
 use App\Http\Controllers\Api\V1\User\Package\PackageCategoryController;
 use App\Http\Controllers\Api\V1\User\Package\PackageController;

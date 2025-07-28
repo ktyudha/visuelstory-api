@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Models\Package;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
-class PackageAddOn extends Model
+class Event extends Model
 {
     use HasUuids;
 
-    protected $table = 'package_addons';
-
     protected $fillable = [
-        'name',
-        'price',
+        'package_id',
+        'invoice_id',
+        'note',
+        'date',
+        'location',
     ];
 
     protected $hidden = [

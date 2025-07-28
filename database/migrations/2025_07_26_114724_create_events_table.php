@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('package_add_ons', function (Blueprint $table) {
+        Schema::create('events', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
-            $table->string('price');
+            $table->foreignUuid('package_id')->nullable()->constrained('packages')->nullOnDelete();
+            $table->foreignUuid('invoice_id')->nullable()->constrained('invoices')->nullOnDelete();
+            $table->string('note');
+            $table->dateTime('date');
+            $table->text('location');
             $table->timestamps();
         });
     }
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('package_add_ons');
+        Schema::dropIfExists('events');
     }
 };
