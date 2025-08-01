@@ -11,4 +11,9 @@ class InvoiceDetailRepository extends BaseRepository
     {
         parent::__construct($invoiceDetail);
     }
+
+    public function insertMany(array $details)
+    {
+        return  $this->invoiceDetail::insert($details);
+    }
 }

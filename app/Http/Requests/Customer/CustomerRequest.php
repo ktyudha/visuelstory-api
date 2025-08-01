@@ -24,8 +24,8 @@ class CustomerRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
-            'email' => ['required', 'string', Rule::unique('customers', 'email')->ignore($this->customer)],
-            'phone' => ['required', 'string', Rule::unique('customers', 'phone')->ignore($this->customer)],
+            'email' => ['required', 'string'],
+            'phone' => ['required', 'string'],
             'address' => ['nullable', 'string'],
         ];
     }
