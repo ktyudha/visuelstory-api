@@ -2,6 +2,7 @@
 
 namespace App\Models\Invoice;
 
+use App\Models\Package\PackageAddOn;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
@@ -12,7 +13,6 @@ class InvoiceDetailAddOn extends Model
     protected $fillable = [
         'invoice_detail_id',
         'package_addon_id',
-        'quantity',
         'quantity',
         'amount',
     ];
@@ -25,5 +25,10 @@ class InvoiceDetailAddOn extends Model
     public function invoiceDetail()
     {
         return $this->belongsTo(InvoiceDetail::class);
+    }
+
+    public function packageAddOn()
+    {
+        return $this->belongsTo(PackageAddOn::class, 'package_addon_id');
     }
 }

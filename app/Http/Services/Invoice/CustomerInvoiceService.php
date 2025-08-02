@@ -56,10 +56,11 @@ class CustomerInvoiceService
             $itemPackageAddOns = collect();
 
             foreach ($validated['packages'] as $package) {
-                if (!empty($package['package_addons'])) {
+                if (isset($package['package_addons'])) {
                     foreach ($package['package_addons'] as $addon) {
-                        $packageAddOn = $this->packageAddOnRepository->findById($addon->id);
+                        $packageAddOn = $this->packageAddOnRepository->findById($addon['id']);
                         $itemPackageAddOns->push([
+                            'package_id'       => $package['id'],
                             'package_addon_id' => $addon['id'],
                             'quantity' => (int) $addon['quantity'],
                             'amount' => (int) $packageAddOn->price * $addon['quantity'],
@@ -89,7 +90,7 @@ class CustomerInvoiceService
             }
 
             $itemPackageAddOns->each(function ($item) use ($invoiceDetailMap) {
-                $invoiceDetailId = $invoiceDetailMap[$item['package_id']] ?? null;
+                $invoiceDetailId = $invoiceDetailMap[$item['package_id']];
                 if ($invoiceDetailId) {
                     $this->invoiceDetailAddOnRepository->create([
                         'invoice_detail_id' => $invoiceDetailId,
@@ -100,17 +101,7 @@ class CustomerInvoiceService
                 }
             });
 
-            return $invoiceDetailMap;
+            return $invoice;
         });
-
-        // $validated = $request->validate([
-        //     'package_category_id' => ['required', 'string', 'exists:package_categories,id'],
-        //     'name' => ['required', 'string'],
-        //     'description' => ['required', 'string'],
-        //     'price' => ['required'],
-        //     'discount' => ['nullable'],
-        // ]);
-
-        // return $this->invoiceRepository->create($validated);
     }
 }

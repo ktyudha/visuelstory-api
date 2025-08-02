@@ -2,6 +2,7 @@
 
 namespace App\Models\Invoice;
 
+use App\Models\Package\Package;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
@@ -29,5 +30,10 @@ class InvoiceDetail extends Model
     public function invoiceDetailAddons()
     {
         return $this->hasMany(InvoiceDetailAddOn::class);
+    }
+
+    public function package()
+    {
+        return $this->belongsTo(Package::class);
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Requests\Invoice\CustomerInvoiceRequest;
 use App\Http\Services\Invoice\CustomerInvoiceService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Invoice\CustomerInvoiceResource;
 
 class InvoiceController extends Controller
 {
@@ -17,7 +18,7 @@ class InvoiceController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'data' => $data,
+            'data' => new CustomerInvoiceResource($data),
         ]);
     }
 }
