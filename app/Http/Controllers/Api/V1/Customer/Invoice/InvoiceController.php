@@ -6,11 +6,17 @@ use App\Http\Requests\Invoice\CustomerInvoiceRequest;
 use App\Http\Services\Invoice\CustomerInvoiceService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Pagination\PaginationRequest;
 use App\Http\Resources\Invoice\CustomerInvoiceResource;
 
 class InvoiceController extends Controller
 {
     public function __construct(protected CustomerInvoiceService $customerInvoiceService) {}
+
+    public function index(PaginationRequest $request)
+    {
+        return $this->customerInvoiceService->index($request);
+    }
 
     public function store(CustomerInvoiceRequest $request)
     {

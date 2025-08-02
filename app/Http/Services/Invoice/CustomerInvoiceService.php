@@ -2,6 +2,7 @@
 
 namespace App\Http\Services\Invoice;
 
+use App\Enums\Guard\GuardEnum;
 use App\Http\Repositories\Customer\CustomerRepository;
 use App\Http\Repositories\Invoice\InvoiceDetailAddOnRepository;
 use App\Http\Repositories\Invoice\InvoiceDetailRepository;
@@ -9,7 +10,10 @@ use App\Http\Repositories\Invoice\InvoiceRepository;
 use App\Http\Repositories\Package\PackageAddOnRepository;
 use App\Http\Repositories\Package\PackageRepository;
 use App\Http\Requests\Invoice\CustomerInvoiceRequest;
+use App\Http\Requests\Pagination\PaginationRequest;
+use App\Http\Resources\Invoice\CustomerInvoiceResource;
 use App\Http\Services\FileManager\FileManagerService;
+use App\Models\Invoice\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -25,6 +29,28 @@ class CustomerInvoiceService
         protected InvoiceDetailAddOnRepository $invoiceDetailAddOnRepository,
         protected FileManagerService $fileManagerService
     ) {}
+
+    public function index(PaginationRequest $request)
+    {
+        $filters = $request->only(['name']);
+
+        $user = auth()->guard(GuardEnum::CUSTOMER)->user();
+        $model = (new Invoice())->where('customer_id', $user->id);
+
+        return customPaginate(
+            $model,
+            [
+                'property_name' => 'data',
+                'resource' => CustomerInvoiceResource::class,
+                'sort_by_property' => 'created_at',
+                'order_direction' => 'desc',
+                // 'sort_by' => 'oldest',
+                // 'relations' => ['invoiceDetails'],
+            ],
+            $request->limit ?? 10,
+            $filters
+        );
+    }
 
     public function store(CustomerInvoiceRequest $request)
     {

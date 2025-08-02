@@ -31,9 +31,9 @@ class CustomerRepository extends BaseRepository
         ]);
     }
 
-    public function updateOrCreate(string $phone, array $data)
+    public function updateOrCreate(array $email, array $data)
     {
-        return $this->customer::updateOrCreate($phone, $data);
+        return $this->customer::updateOrCreate($email, $data);
     }
 
     public function firstOrCreate(string $phone, array $data)
