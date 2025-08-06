@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\User\Package;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Pagination\PaginationRequest;
 use App\Http\Services\Package\PackageAddOnService;
 
 class PackageAddOnController extends Controller
@@ -13,9 +14,9 @@ class PackageAddOnController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(PaginationRequest $request)
     {
-        return $this->packageAddOnService->index();
+        return $this->packageAddOnService->index($request);
     }
 
     /**

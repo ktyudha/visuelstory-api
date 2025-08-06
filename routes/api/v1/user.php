@@ -12,7 +12,7 @@ use App\Http\Controllers\Api\V1\User\Package\PackageController;
 
 Route::prefix('auth')->group(function () {
     // Auth User
-    Route::prefix('user')->group(function () {
+    Route::prefix('admin')->group(function () {
         Route::post('/send-otp', [AuthController::class, 'sendOtp'])->middleware('throttle:2,1')->name('user.send-otp');
         Route::post('/verify-otp', [AuthController::class, 'verifyOtp'])->name('user.verify-otp');
         Route::get('/me', [AuthController::class, 'user'])->name('user.me');
@@ -22,7 +22,7 @@ Route::prefix('auth')->group(function () {
 
 // User
 Route::middleware('auth:apiUser')->group(function () {
-    Route::prefix('user')->group(function () {
+    Route::prefix('admin')->group(function () {
 
         // Pacakage
         Route::apiResource('package-categories', PackageCategoryController::class)->only([
@@ -31,13 +31,13 @@ Route::middleware('auth:apiUser')->group(function () {
             'update',
             'destroy'
         ]);
-        Route::apiResource('package-add-ons', PackageAddOnController::class)->only([
+        Route::apiResource('package-addons', PackageAddOnController::class)->only([
             'index',
             'store',
             'update',
             'destroy'
         ]);
-        Route::apiResource('package', PackageController::class)->only([
+        Route::apiResource('packages', PackageController::class)->only([
             'index',
             'store',
             'update',
