@@ -33,6 +33,11 @@ class PackageService
         );
     }
 
+    public function show(string $id)
+    {
+        return new PackageResource($this->packageRepository->findById($id));
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([

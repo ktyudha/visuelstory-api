@@ -39,6 +39,7 @@ Route::middleware('auth:apiUser')->group(function () {
         ]);
         Route::apiResource('packages', PackageController::class)->only([
             'index',
+            'show',
             'store',
             'update',
             'destroy'

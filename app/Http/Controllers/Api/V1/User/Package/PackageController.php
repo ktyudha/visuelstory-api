@@ -20,6 +20,11 @@ class PackageController extends Controller
         return $this->packageService->index($request);
     }
 
+    public function show($id)
+    {
+        return $this->packageService->show($id);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
