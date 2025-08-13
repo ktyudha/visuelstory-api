@@ -3,6 +3,9 @@
 namespace App\Http\Services\Event;
 
 use App\Http\Repositories\Event\EventRepository;
+use App\Http\Requests\Pagination\PaginationRequest;
+use App\Http\Resources\Event\EventResource;
+use App\Models\Event;
 use Illuminate\Http\Request;
 
 class EventService
@@ -11,9 +14,28 @@ class EventService
         protected EventRepository $eventRepository,
     ) {}
 
-    public function index()
+    public function index(PaginationRequest $request)
     {
-        return $this->eventRepository->findAll();
+        $filters = $request->only(['name']);
+
+        return customPaginate(
+            new Event(),
+            [
+                'property_name' => 'data',
+                'resource' => EventResource::class,
+                'sort_by_property' => 'created_at',
+                'order_direction' => 'desc',
+                // 'sort_by' => 'oldest',
+                // 'relations' => ['invoiceDetails'],
+            ],
+            $request->limit ?? 10,
+            $filters
+        );
+    }
+
+    public function show(string $id)
+    {
+        return new EventResource($this->eventRepository->findById($id));
     }
 
     public function store(Request $request)

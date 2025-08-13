@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api\V1\User\Event;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Pagination\PaginationRequest;
 use App\Http\Services\Event\EventService;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class EventController extends Controller
 {
@@ -14,13 +14,14 @@ class EventController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(PaginationRequest $request)
     {
-        $data = $this->eventService->index();
-        return response()->json([
-            'message' => 'success',
-            'data' => $data
-        ]);
+        return $this->eventService->index($request);
+    }
+
+    public function show($id)
+    {
+        return $this->eventService->show($id);
     }
 
     /**
