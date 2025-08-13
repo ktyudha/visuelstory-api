@@ -33,6 +33,11 @@ class PackageAddOnService
         );
     }
 
+    public function show(string $id)
+    {
+        return new PackageAddOnResource($this->packageAddOnRepository->findById($id));
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([

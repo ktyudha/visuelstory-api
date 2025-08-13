@@ -19,6 +19,14 @@ class PackageCategory extends Model
         'updated_at',
     ];
 
+    public function scopeFilters($query, array $filters): void
+    {
+        // Filter name
+        if (!empty($filters['name'])) {
+            $query->where('name', 'like', '%' . $filters['name'] . '%');
+        }
+    }
+
     public function packages()
     {
         return $this->hasMany(Package::class);

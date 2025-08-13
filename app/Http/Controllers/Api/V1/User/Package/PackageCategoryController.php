@@ -19,6 +19,11 @@ class PackageCategoryController extends Controller
         return $this->packageCategoryService->index($request);
     }
 
+    public function show($id)
+    {
+        return $this->packageCategoryService->show($id);
+    }
+
     /**
      * Store a newly created resource in storage.
      */

@@ -26,11 +26,16 @@ class PackageCategoryService
                 'sort_by_property' => 'created_at',
                 'order_direction' => 'desc',
                 // 'sort_by' => 'oldest',
-                // 'relations' => ['invoiceDetails'],
+                'relations' => ['packages'],
             ],
             $request->limit ?? 10,
             $filters
         );
+    }
+
+    public function show(string $id)
+    {
+        return new PackageCategoryResource($this->packageCategoryRepository->findById($id));
     }
 
     public function store(Request $request)

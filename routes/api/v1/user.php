@@ -27,12 +27,14 @@ Route::middleware('auth:apiUser')->group(function () {
         // Pacakage
         Route::apiResource('package-categories', PackageCategoryController::class)->only([
             'index',
+            'show',
             'store',
             'update',
             'destroy'
         ]);
         Route::apiResource('package-addons', PackageAddOnController::class)->only([
             'index',
+            'show',
             'store',
             'update',
             'destroy'

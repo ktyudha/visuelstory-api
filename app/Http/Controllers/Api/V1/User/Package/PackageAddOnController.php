@@ -19,6 +19,11 @@ class PackageAddOnController extends Controller
         return $this->packageAddOnService->index($request);
     }
 
+    public function show($id)
+    {
+        return $this->packageAddOnService->show($id);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
