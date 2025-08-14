@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\Event;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Support\Facades\Storage;
 
 class Invoice extends Model
 {
@@ -24,6 +25,15 @@ class Invoice extends Model
         'created_at',
         'updated_at',
     ];
+
+    public function getProofUrlAttribute()
+    {
+        if ($this->proof && Storage::exists($this->proof)) {
+            return Storage::url($this->proof);
+        }
+
+        return null;
+    }
 
     public function customer()
     {

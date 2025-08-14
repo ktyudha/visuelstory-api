@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\User\Auth\AuthController;
+use App\Http\Controllers\Api\V1\User\Event\EventController;
+use App\Http\Controllers\Api\V1\User\Invoice\InvoiceController;
 use App\Http\Controllers\Api\V1\User\Package\PackageAddOnController;
 use App\Http\Controllers\Api\V1\User\Package\PackageCategoryController;
 use App\Http\Controllers\Api\V1\User\Package\PackageController;
@@ -40,6 +42,25 @@ Route::middleware('auth:apiUser')->group(function () {
             'destroy'
         ]);
         Route::apiResource('packages', PackageController::class)->only([
+            'index',
+            'show',
+            'store',
+            'update',
+            'destroy'
+        ]);
+
+        // Event
+        Route::apiResource('events', EventController::class)->only([
+            'index',
+            'show',
+            'store',
+            'update',
+            'destroy'
+        ]);
+
+
+        // Event
+        Route::apiResource('invoices', InvoiceController::class)->only([
             'index',
             'show',
             'store',
