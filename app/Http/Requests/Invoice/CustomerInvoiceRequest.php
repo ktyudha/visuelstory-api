@@ -31,6 +31,11 @@ class CustomerInvoiceRequest extends FormRequest
             'packages.*.id' => ['required', 'string', 'exists:packages,id'],
             'packages.*.quantity' => ['required', 'numeric', 'min:1'],
 
+            // Event
+            'packages.*.note' => ['required', 'string'],
+            'packages.*.date' => ['required', 'date'],
+            'packages.*.location' => ['required', 'string'],
+
             // Package Add On
             'packages.*.package_addons' => ['nullable', 'array'],
             'packages.*.package_addons.*.id' => ['required', 'exists:package_addons,id'],

@@ -4,6 +4,7 @@ namespace App\Http\Services\Invoice;
 
 use App\Enums\Guard\GuardEnum;
 use App\Http\Repositories\Customer\CustomerRepository;
+use App\Http\Repositories\Event\EventRepository;
 use App\Http\Repositories\Invoice\InvoiceDetailAddOnRepository;
 use App\Http\Repositories\Invoice\InvoiceDetailRepository;
 use App\Http\Repositories\Invoice\InvoiceRepository;
@@ -20,6 +21,8 @@ use Illuminate\Support\Str;
 
 class CustomerInvoiceService
 {
+    protected $customer;
+
     public function __construct(
         protected CustomerRepository $customerRepository,
         protected PackageRepository $packageRepository,
@@ -27,15 +30,16 @@ class CustomerInvoiceService
         protected InvoiceRepository $invoiceRepository,
         protected InvoiceDetailRepository $invoiceDetailRepository,
         protected InvoiceDetailAddOnRepository $invoiceDetailAddOnRepository,
+        protected EventRepository $eventRepository,
         protected FileManagerService $fileManagerService
-    ) {}
+    ) {
+        $this->customer = auth()->guard(GuardEnum::CUSTOMER)->user();
+    }
 
     public function index(PaginationRequest $request)
     {
         $filters = $request->only(['name']);
-
-        $user = auth()->guard(GuardEnum::CUSTOMER)->user();
-        $model = (new Invoice())->where('customer_id', $user->id);
+        $model = (new Invoice())->where('customer_id', $this->customer->id);
 
         return customPaginate(
             $model,
@@ -45,7 +49,7 @@ class CustomerInvoiceService
                 'sort_by_property' => 'created_at',
                 'order_direction' => 'desc',
                 // 'sort_by' => 'oldest',
-                // 'relations' => ['invoiceDetails'],
+                'relations' => ['events'],
             ],
             $request->limit ?? 10,
             $filters
@@ -58,13 +62,6 @@ class CustomerInvoiceService
             $validated = $request->validated();
 
             // $customerId = $this->customerRepository->findById($validated['customer_id']);
-
-            if ($request->file('proof')) {
-                $payload['proof'] = $request->proof->store(
-                    $this->fileManagerService->getUserPath('invoices/proof'),
-                    $this->fileManagerService->getDisk()
-                );
-            }
 
             $packageIds = collect($validated['packages'])->pluck('id');
             $packages = $this->packageRepository->findMany($packageIds);
@@ -101,10 +98,30 @@ class CustomerInvoiceService
             $payload['total_price'] = $price;
             $payload['invoice_number'] = generateInvoiceNumber();
 
+            if ($request->file('proof')) {
+                $payload['proof'] = $request->proof->store(
+                    $this->fileManagerService->getUserPath('invoices/proof'),
+                    $this->fileManagerService->getDisk()
+                );
+            }
+
+            // Invoice
             $invoice = $this->invoiceRepository->create($payload);
+
+            // Event 
+            foreach ($validated['packages'] as $pckg) {
+                $this->eventRepository->create([
+                    'invoice_id' => $invoice->id,
+                    'package_id' => $pckg['id'],
+                    'note' => $pckg['note'] ?? '-',
+                    'date' => $pckg['date'] ?? '-',
+                    'location' => $pckg['location'] ?? '-',
+                ]);
+            }
 
             $invoiceDetailMap = [];
             foreach ($itemPackages as $itemPackage) {
+                // Invoice Detail
                 $invoiceDetail = $this->invoiceDetailRepository->create([
                     'invoice_id' => $invoice->id,
                     'package_id' => $itemPackage['package_id'],
@@ -126,6 +143,8 @@ class CustomerInvoiceService
                     ]);
                 }
             });
+
+
 
             return $invoice;
         });

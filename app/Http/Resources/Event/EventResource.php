@@ -14,6 +14,20 @@ class EventResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        // return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'package' => $this->package_id ? [
+                'id' => $this->package->id,
+                'name' => $this->package->name,
+            ] : null,
+            'invoice' => $this->invoice_id ? [
+                'id' => $this->invoice->id,
+                'number' => $this->invoice->invoice_number,
+            ] : null,
+            'note' => $this->note,
+            'date' => $this->date,
+            'location' => $this->location,
+        ];
     }
 }

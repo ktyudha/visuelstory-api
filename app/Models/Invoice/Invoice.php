@@ -3,6 +3,7 @@
 namespace App\Models\Invoice;
 
 use App\Models\Customer;
+use App\Models\Event;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
@@ -32,5 +33,10 @@ class Invoice extends Model
     public function invoiceDetails()
     {
         return $this->hasMany(InvoiceDetail::class);
+    }
+
+    public function events()
+    {
+        return $this->hasMany(Event::class);
     }
 }

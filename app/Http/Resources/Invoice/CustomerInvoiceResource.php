@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Invoice;
 
+use App\Http\Resources\Event\EventResource;
 use App\Http\Resources\Invoice\InvoiceDetailResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -26,6 +27,16 @@ class CustomerInvoiceResource extends JsonResource
             'invoice_url' => $this->invoice_url,
             'total_price' => $this->total_price,
             'proof' => $this->proof,
+            'events' => $this->whenLoaded('events', function () {
+                return $this->events->map(function ($event) {
+                    return [
+                        'id' => $event->id,
+                        'note' => $event->note,
+                        'date' => $event->date,
+                        'location' => $event->location,
+                    ];
+                });
+            }),
             'invoice_detail' => InvoiceDetailResource::collection($this->invoiceDetails),
             // 'invoice_detail_addon' => $this->invoice_detail_addon,
         ];

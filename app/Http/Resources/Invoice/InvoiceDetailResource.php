@@ -16,7 +16,7 @@ class InvoiceDetailResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
-            'invoice_id' => $this->invoice_id,
+            // 'invoice_id' => $this->invoice_id,
             'package' => $this->package_id ? [
                 'id' => $this->package->id,
                 'name' => $this->package->name,

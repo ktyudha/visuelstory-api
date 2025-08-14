@@ -16,7 +16,7 @@ class InvoiceDetailAddOnResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
-            'invoice_detail_id' => $this->invoice_detail_id,
+            // 'invoice_detail_id' => $this->invoice_detail_id,
             'package_addon' => $this->package_addon_id ? [
                 'id' => $this->packageAddOn->id,
                 'name' => $this->packageAddOn->name,

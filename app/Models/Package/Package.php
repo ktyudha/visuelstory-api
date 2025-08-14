@@ -2,6 +2,7 @@
 
 namespace App\Models\Package;
 
+use App\Models\Event;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
@@ -39,5 +40,10 @@ class Package extends Model
     public function packageCategory()
     {
         return $this->belongsTo(PackageCategory::class);
+    }
+
+    public function events()
+    {
+        return $this->hasMany(Event::class);
     }
 }

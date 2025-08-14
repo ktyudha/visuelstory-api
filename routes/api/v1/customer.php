@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\Customer\Auth\AuthController;
 use App\Http\Controllers\Api\V1\Customer\Customer\CustomerController;
+use App\Http\Controllers\Api\V1\Customer\Event\EventController;
 use App\Http\Controllers\Api\V1\Customer\Invoice\InvoiceController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,10 +22,14 @@ Route::prefix('customer')->group(function () {
     Route::prefix('invoices')->group(function () {
         Route::post('create-user', [CustomerController::class, 'firstOrCreate'])->name('invoices.create-user');
         Route::post('create-invoice', [InvoiceController::class, 'store'])->name('invoices.create-invoice');
+        Route::post('create-event', [EventController::class, 'store'])->name('invoices.create-event');
     });
 
     Route::middleware('auth:apiCustomer')->group(function () {
         // History
         Route::get('/invoices/history', [InvoiceController::class, 'index'])->name('invoices.index');
+
+        // Event
+        Route::get('/events', [EventController::class, 'index'])->name('events.index');
     });
 });
