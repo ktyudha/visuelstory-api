@@ -20,10 +20,10 @@ class InvoiceDetailAddOnResource extends JsonResource
             'package_addon' => $this->package_addon_id ? [
                 'id' => $this->packageAddOn->id,
                 'name' => $this->packageAddOn->name,
-                'price' => $this->packageAddOn->price
+                'price' => (int) $this->packageAddOn->price
             ] : null,
-            'quantity' => $this->quantity,
-            'amount' => $this->amount,
+            'quantity' => (int) $this->quantity,
+            'amount' => (int) $this->amount,
         ];
     }
 }

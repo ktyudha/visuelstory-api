@@ -21,8 +21,8 @@ class InvoiceDetailResource extends JsonResource
                 'id' => $this->package->id,
                 'name' => $this->package->name,
             ] : null,
-            'quantity' => $this->quantity,
-            'amount' => $this->amount,
+            'quantity' => (int) $this->quantity,
+            'amount' => (int) $this->amount,
             'invoice_detail_addons' => InvoiceDetailAddOnResource::collection($this->invoiceDetailAddons)
         ];
     }

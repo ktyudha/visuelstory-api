@@ -25,7 +25,7 @@ class CustomerInvoiceResource extends JsonResource
             ] : null,
             'invoice_number' => $this->invoice_number,
             'invoice_url' => $this->invoice_url,
-            'total_price' => $this->total_price,
+            'total_price' => (int) $this->total_price,
             'proof' => $this->proofUrl,
             'events' => $this->whenLoaded('events', function () {
                 return $this->events->map(function ($event) {
