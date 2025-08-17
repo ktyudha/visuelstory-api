@@ -20,6 +20,8 @@ class InvoiceDetailResource extends JsonResource
             'package' => $this->package_id ? [
                 'id' => $this->package->id,
                 'name' => $this->package->name,
+                'description' => $this->package->description,
+                'category' => $this->package->packageCategory->name,
             ] : null,
             'quantity' => (int) $this->quantity,
             'amount' => (int) $this->amount,
