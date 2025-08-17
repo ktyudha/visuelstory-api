@@ -38,10 +38,14 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            ${{ github.actor }} created commit:
-            Commit message: ${{ github.event.commits[0].message }}
+            ✅ **GitHub Action Status**
 
-            Repository: ${{ github.repository }}
-            Branch: ${{ github.ref_name }}
+            👤 Actor: ${{ github.actor }}
+            📦 Repository: ${{ github.repository }}
+            🌿 Branch: ${{ github.ref_name }}
 
-            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+            🏗 Job ID: ${{ github.job }}
+            🔍 Status: ${{ needs.prepare-job.result }}
+
+            📝 Commit: ${{ github.event.commits[0].message }}
+            🔗 [View Commit](https://github.com/${{ github.repository }}/commit/${{ github.sha }})
