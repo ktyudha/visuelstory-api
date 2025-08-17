@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1\User\Package;
 use App\Http\Services\Package\PackageCategoryService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Pagination\PaginationRequest;
 
 class PackageCategoryController extends Controller
 {
@@ -13,9 +14,14 @@ class PackageCategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(PaginationRequest $request)
     {
-        return $this->packageCategoryService->index();
+        return $this->packageCategoryService->index($request);
+    }
+
+    public function show($id)
+    {
+        return $this->packageCategoryService->show($id);
     }
 
     /**

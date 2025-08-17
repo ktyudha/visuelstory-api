@@ -1,7 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\V1\Auth\AuthController;
+use App\Http\Controllers\Api\V1\User\Auth\AuthController;
+use App\Http\Controllers\Api\V1\User\Event\EventController;
+use App\Http\Controllers\Api\V1\User\Invoice\InvoiceController;
+use App\Http\Controllers\Api\V1\User\Package\PackageAddOnController;
 use App\Http\Controllers\Api\V1\User\Package\PackageCategoryController;
 use App\Http\Controllers\Api\V1\User\Package\PackageController;
 
@@ -11,7 +14,7 @@ use App\Http\Controllers\Api\V1\User\Package\PackageController;
 
 Route::prefix('auth')->group(function () {
     // Auth User
-    Route::prefix('user')->group(function () {
+    Route::prefix('admin')->group(function () {
         Route::post('/send-otp', [AuthController::class, 'sendOtp'])->middleware('throttle:2,1')->name('user.send-otp');
         Route::post('/verify-otp', [AuthController::class, 'verifyOtp'])->name('user.verify-otp');
         Route::get('/me', [AuthController::class, 'user'])->name('user.me');
@@ -21,17 +24,45 @@ Route::prefix('auth')->group(function () {
 
 // User
 Route::middleware('auth:apiUser')->group(function () {
-    Route::prefix('user')->group(function () {
+    Route::prefix('admin')->group(function () {
 
         // Pacakage
         Route::apiResource('package-categories', PackageCategoryController::class)->only([
             'index',
+            'show',
             'store',
             'update',
             'destroy'
         ]);
-        Route::apiResource('package', PackageController::class)->only([
+        Route::apiResource('package-addons', PackageAddOnController::class)->only([
             'index',
+            'show',
+            'store',
+            'update',
+            'destroy'
+        ]);
+        Route::apiResource('packages', PackageController::class)->only([
+            'index',
+            'show',
+            'store',
+            'update',
+            'destroy'
+        ]);
+
+        // Event
+        Route::apiResource('events', EventController::class)->only([
+            'index',
+            'show',
+            'store',
+            'update',
+            'destroy'
+        ]);
+
+
+        // Event
+        Route::apiResource('invoices', InvoiceController::class)->only([
+            'index',
+            'show',
             'store',
             'update',
             'destroy'

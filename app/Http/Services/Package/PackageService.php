@@ -3,6 +3,9 @@
 namespace App\Http\Services\Package;
 
 use App\Http\Repositories\Package\PackageRepository;
+use App\Http\Requests\Pagination\PaginationRequest;
+use App\Http\Resources\Package\PackageResource;
+use App\Models\Package\Package;
 use Illuminate\Http\Request;
 
 class PackageService
@@ -11,9 +14,28 @@ class PackageService
         protected PackageRepository $packageRepository,
     ) {}
 
-    public function index()
+    public function index(PaginationRequest $request)
     {
-        return $this->packageRepository->findAll();
+        $filters = $request->only(['name']);
+
+        return customPaginate(
+            new Package(),
+            [
+                'property_name' => 'data',
+                'resource' => PackageResource::class,
+                'sort_by_property' => 'created_at',
+                'order_direction' => 'desc',
+                // 'sort_by' => 'oldest',
+                // 'relations' => ['invoiceDetails'],
+            ],
+            $request->limit ?? 10,
+            $filters
+        );
+    }
+
+    public function show(string $id)
+    {
+        return new PackageResource($this->packageRepository->findById($id));
     }
 
     public function store(Request $request)

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1\User\Package;
 use App\Http\Services\Package\PackageService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Pagination\PaginationRequest;
 use App\Http\Resources\Package\PackageResource;
 
 class PackageController extends Controller
@@ -14,13 +15,14 @@ class PackageController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(PaginationRequest $request)
     {
-        $data = $this->packageService->index();
-        return response()->json([
-            'message' => 'success',
-            'data' => PackageResource::collection($data)
-        ]);
+        return $this->packageService->index($request);
+    }
+
+    public function show($id)
+    {
+        return $this->packageService->show($id);
     }
 
     /**

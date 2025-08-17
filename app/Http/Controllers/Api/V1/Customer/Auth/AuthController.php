@@ -1,40 +1,40 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Auth;
+namespace App\Http\Controllers\Api\V1\Customer\Auth;
 
 use App\Enums\Guard\GuardEnum;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Http\Resources\User\UserResource;
-use App\Http\Services\Auth\AuthService;
+use App\Http\Resources\Customer\CustomerResource;
+use App\Http\Services\Auth\AuthCustomerService;
 use Illuminate\Http\JsonResponse;
 
 class AuthController extends Controller
 {
     public function __construct(
-        protected AuthService $authService
+        protected AuthCustomerService $authCustomerService
     ) {}
 
     public function sendOtp(LoginRequest $request)
     {
-        $user = $this->authService->sendOTPByEmail($request);
+        $user = $this->authCustomerService->sendOTPByEmail($request);
 
         return response()->json([
             'status' => 'Success',
             'message' => 'Please Check Your email for the OTP code.',
-            'data' => new UserResource($user)
+            'data' => new CustomerResource($user)
         ]);
     }
 
     public function verifyOtp(Request $request)
     {
-        return  $this->authService->verifyOtp($request);
+        return  $this->authCustomerService->verifyOtp($request);
     }
 
     public function logout()
     {
-        $this->authService->centralizedLogout();
+        $this->authCustomerService->centralizedLogout();
 
         return response()->json(['message' => 'Successfully logged out']);
     }
@@ -44,7 +44,7 @@ class AuthController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Data berhasil diambil!',
-            'data' => new UserResource(auth()->guard(GuardEnum::USER)->user()),
+            'data' => new CustomerResource(auth()->guard(GuardEnum::CUSTOMER)->user()),
         ]);
     }
 }

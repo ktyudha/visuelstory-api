@@ -23,6 +23,11 @@ class BaseRepository
         return $this->model::with($relations)->findOrFail($id);
     }
 
+    public function findMany($ids, array $relations = [])
+    {
+        return $this->model::with($relations)->whereIn('id', $ids)->get();
+    }
+
     public function create($data)
     {
         return $this->model::create($data);
