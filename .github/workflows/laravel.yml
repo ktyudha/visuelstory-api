@@ -28,6 +28,7 @@ jobs:
   notify-job:
     name: Notify Telegram
     runs-on: ubuntu-latest
+    needs: [prepare-job]
     steps:
       - name: Send Notify Telegram
         uses: appleboy/telegram-action@master
