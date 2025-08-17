@@ -11,9 +11,9 @@ jobs:
     name: Prepare
     runs-on: ubuntu-latest
     steps:
-      # - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
-      #   with:
-      #     php-version: "8.2"
+      - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+        with:
+          php-version: "8.2"
       - name: Checkout Code
         uses: actions/checkout@v5
       - name: Copy .env
