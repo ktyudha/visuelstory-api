@@ -2,9 +2,9 @@ name: Visuelstory
 
 on:
   push:
-    branches: ["dev"]
+    branches: ["workflow"]
   pull_request:
-    branches: ["dev"]
+    branches: ["workflow"]
 
 jobs:
   web-build-job:
@@ -17,7 +17,7 @@ jobs:
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - name: Install Dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+        run: composer --version
       - name: Generate Key
         run: php artisan key:generate
       - name: Directory Permissions
