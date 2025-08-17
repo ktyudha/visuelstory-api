@@ -2,12 +2,12 @@ name: Visuelstory
 
 on:
   push:
-    branches: ["workflow"]
-  pull_request:
-    branches: ["workflow"]
+    branches:
+      - workflow
+      - staging
 
 jobs:
-  web-build-job:
+  prepare-job:
     name: Prepare
     runs-on: ubuntu-latest
     steps:
@@ -19,8 +19,6 @@ jobs:
         uses: actions/checkout@v5
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-      # - name: List all file
-      #   run: ls -al
       - name: Install Dependencies
         run: composer install -n --prefer-dist
       - name: Generate Key
