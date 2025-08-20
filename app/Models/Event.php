@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Invoice\Invoice;
+use App\Models\Invoice\InvoiceDetail;
 use App\Models\Package\Package;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -13,8 +14,7 @@ class Event extends Model
     use HasUuids;
 
     protected $fillable = [
-        'package_id',
-        'invoice_id',
+        'invoice_detail_id',
         'note',
         'date',
         'location',
@@ -25,9 +25,9 @@ class Event extends Model
         'updated_at',
     ];
 
-    public function invoice()
+    public function invoiceDetail()
     {
-        return $this->belongsTo(Invoice::class);
+        return $this->belongsTo(InvoiceDetail::class);
     }
 
     public function package()
@@ -35,8 +35,8 @@ class Event extends Model
         return $this->belongsTo(Package::class);
     }
 
-    public function customer(): HasOneThrough
+    public function invoice(): HasOneThrough
     {
-        return $this->hasOneThrough(Customer::class, Invoice::class, 'id', 'id', 'invoice_id', 'customer_id');
+        return $this->hasOneThrough(Invoice::class, InvoiceDetail::class, 'id', 'id', 'invoice_detail_id', 'invoice_id');
     }
 }

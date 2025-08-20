@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('package_id')->nullable()->constrained('packages')->nullOnDelete();
-            $table->foreignUuid('invoice_id')->nullable()->constrained('invoices')->nullOnDelete();
+            $table->foreignUuid('invoice_detail_id')->nullable()->constrained('invoice_details')->nullOnDelete();
             $table->string('note');
             $table->dateTime('date');
             $table->text('location');

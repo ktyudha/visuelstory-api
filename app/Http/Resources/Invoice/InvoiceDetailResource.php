@@ -25,7 +25,17 @@ class InvoiceDetailResource extends JsonResource
             ] : null,
             'quantity' => (int) $this->quantity,
             'amount' => (int) $this->amount,
-            'invoice_detail_addons' => InvoiceDetailAddOnResource::collection($this->invoiceDetailAddons)
+            'invoice_detail_addons' => InvoiceDetailAddOnResource::collection($this->invoiceDetailAddons),
+            'events' => $this->whenLoaded('events', function () {
+                return $this->events->map(function ($event) {
+                    return [
+                        'id' => $event->id,
+                        'note' => $event->note,
+                        'date' => $event->date,
+                        'location' => $event->location,
+                    ];
+                });
+            }),
         ];
     }
 }
