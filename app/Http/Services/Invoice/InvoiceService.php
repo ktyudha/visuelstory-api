@@ -35,7 +35,7 @@ class InvoiceService
 
     public function show(string $id)
     {
-        return new CustomerInvoiceResource($this->invoiceRepository->findById($id, ['events']));
+        return new CustomerInvoiceResource($this->invoiceRepository->findById($id, ['invoiceDetails.events']));
     }
 
     public function store(Request $request)
