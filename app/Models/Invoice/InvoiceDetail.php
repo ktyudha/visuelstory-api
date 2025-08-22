@@ -2,6 +2,7 @@
 
 namespace App\Models\Invoice;
 
+use App\Models\Event;
 use App\Models\Package\Package;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -35,5 +36,10 @@ class InvoiceDetail extends Model
     public function package()
     {
         return $this->belongsTo(Package::class);
+    }
+
+    public function events()
+    {
+        return $this->hasMany(Event::class);
     }
 }

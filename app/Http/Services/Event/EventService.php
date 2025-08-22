@@ -26,7 +26,7 @@ class EventService
                 'sort_by_property' => 'created_at',
                 'order_direction' => 'desc',
                 // 'sort_by' => 'oldest',
-                // 'relations' => ['invoiceDetails'],
+                'relations' => ['invoiceDetail',],
             ],
             $request->limit ?? 10,
             $filters

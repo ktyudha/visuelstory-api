@@ -49,7 +49,7 @@ class CustomerInvoiceService
                 'sort_by_property' => 'created_at',
                 'order_direction' => 'desc',
                 // 'sort_by' => 'oldest',
-                'relations' => ['events'],
+                'relations' => ['invoiceDetails.events'],
             ],
             $request->limit ?? 10,
             $filters
@@ -108,17 +108,6 @@ class CustomerInvoiceService
             // Invoice
             $invoice = $this->invoiceRepository->create($payload);
 
-            // Event 
-            foreach ($validated['packages'] as $pckg) {
-                $this->eventRepository->create([
-                    'invoice_id' => $invoice->id,
-                    'package_id' => $pckg['id'],
-                    'note' => $pckg['note'] ?? '-',
-                    'date' => $pckg['date'] ?? '-',
-                    'location' => $pckg['location'] ?? '-',
-                ]);
-            }
-
             $invoiceDetailMap = [];
             foreach ($itemPackages as $itemPackage) {
                 // Invoice Detail
@@ -130,6 +119,18 @@ class CustomerInvoiceService
                 ]);
 
                 $invoiceDetailMap[$itemPackage['package_id']] = $invoiceDetail->id;
+            }
+
+            // Event 
+            foreach ($validated['packages'] as $pckg) {
+                $invoiceDetailId = $invoiceDetailMap[$pckg['id']];
+                $this->eventRepository->create([
+                    'invoice_detail_id' => $invoiceDetailId,
+                    'package_id' => $pckg['id'],
+                    'note' => $pckg['note'] ?? '-',
+                    'date' => $pckg['date'] ?? '-',
+                    'location' => $pckg['location'] ?? '-',
+                ]);
             }
 
             $itemPackageAddOns->each(function ($item) use ($invoiceDetailMap) {

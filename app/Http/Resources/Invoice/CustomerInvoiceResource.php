@@ -25,16 +25,6 @@ class CustomerInvoiceResource extends JsonResource
             'transaction_status' => $this->transaction_status,
             'total_price' => (int) $this->total_price,
             'proof' => $this->proofUrl,
-            'events' => $this->whenLoaded('events', function () {
-                return $this->events->map(function ($event) {
-                    return [
-                        'id' => $event->id,
-                        'note' => $event->note,
-                        'date' => $event->date,
-                        'location' => $event->location,
-                    ];
-                });
-            }),
             'invoice_details' => InvoiceDetailResource::collection($this->invoiceDetails),
             'created_at' => $this->created_at
             // 'invoice_detail_addon' => $this->invoice_detail_addon,

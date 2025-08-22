@@ -26,7 +26,7 @@ class InvoiceService
                 'sort_by_property' => 'created_at',
                 'order_direction' => 'desc',
                 // 'sort_by' => 'oldest',
-                'relations' => ['events'],
+                'relations' => ['invoiceDetails.events'],
             ],
             $request->limit ?? 10,
             $filters
@@ -35,7 +35,7 @@ class InvoiceService
 
     public function show(string $id)
     {
-        return new CustomerInvoiceResource($this->invoiceRepository->findById($id, ['events']));
+        return new CustomerInvoiceResource($this->invoiceRepository->findById($id, ['invoiceDetails.events']));
     }
 
     public function store(Request $request)
