@@ -15,18 +15,29 @@ class PackageCategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            'Engagement',
-            'Birthday',
-            'Couple Session',
-            'Akad',
-            'Wedding',
+            [
+                'name' => 'Mini Wedding',
+                'description' => 'Ngunduh mantu, intimate wedding',
+            ],
+            [
+                'name' => 'Couple Session',
+                'description' => 'Couple session, prewedding',
+            ],
+            [
+                'name' => 'Before Wedding',
+                'description' => 'Engagement, akad, siraman, etc.',
+            ],
+            [
+                'name' => 'Wedding',
+                'description' => 'Include akad & reception',
+            ],
         ];
 
         foreach ($categories as $category) {
             DB::table('package_categories')->insert([
                 'id' => (string) Str::uuid(),
-                'name' => $category,
-                'description' => $category . ' package category',
+                'name' => $category['name'],
+                'description' => $category['description'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
