@@ -3,8 +3,8 @@ name: Visuelstory
 on:
   push:
     branches:
-      - workflow
-      - staging
+      - main
+      - dev
 
 jobs:
   prepare-job:
