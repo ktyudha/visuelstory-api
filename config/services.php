@@ -35,4 +35,11 @@ return [
         ],
     ],
 
+    'whatsapp' => [
+        'url' => env('WHATSAPP_URL'),
+        'hmac_public_key' => env('WHATSAPP_HMAC_PUBLIC_KEY'),
+        'hmac_secret_key' => env('WHATSAPP_HMAC_SECRET_KEY'),
+        'message' => env('WHATSAPP_MESSAGE'),
+    ],
+
 ];

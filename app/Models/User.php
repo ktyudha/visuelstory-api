@@ -22,6 +22,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'whatsapp',
         'email',
         'otp',
         'otp_expires_at',
