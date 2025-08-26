@@ -11,7 +11,7 @@ Route::prefix('auth')->group(function () {
     // Auth User
     Route::prefix('customer')->group(function () {
         Route::post('/send-otp', [AuthController::class, 'sendOtp'])->middleware('throttle:2,1')->name('customer.send-otp');
-        Route::post('/verify-otp', [AuthController::class, 'verifyOtp'])->name('customer.verify-otp');
+        Route::post('/verify-otp', [AuthController::class, 'verifyOtp'])->middleware('throttle:2,1')->name('customer.verify-otp');
         Route::get('/me', [AuthController::class, 'user'])->name('customer.me');
         Route::post('/logout', [AuthController::class, 'logout'])->name('customer.logout');
     });

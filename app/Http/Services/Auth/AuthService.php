@@ -51,7 +51,7 @@ class AuthService
     {
         $validated =  $request->apiValidate([
             'whatsapp' => ['required'],
-            'otp' =>  ['required', 'digits:6'],
+            'otp' =>  ['required'],
         ]);
 
         $whatsapp = normalizeWhatsapp($validated['whatsapp']);
