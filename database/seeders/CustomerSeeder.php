@@ -19,7 +19,7 @@ class CustomerSeeder extends Seeder
         Customer::create([
             'name' => 'customer baru',
             'email' => 'customer@gmail.com',
-            'phone' => '0858123456789',
+            'whatsapp' => '085848250548',
             'otp' => Hash::make(123456),
             'otp_expires_at' => Carbon::now()->addMonth(1),
         ]);

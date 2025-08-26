@@ -18,18 +18,19 @@ class AuthController extends Controller
 
     public function sendOtp(LoginRequest $request)
     {
-        $user = $this->authCustomerService->sendOTPByEmail($request);
+        // $user = $this->authCustomerService->sendOTPByEmail($request);
+        $user = $this->authCustomerService->sendOTPByWhatsApp($request);
 
         return response()->json([
             'status' => 'Success',
-            'message' => 'Please Check Your email for the OTP code.',
+            'message' => 'Please Check Your WhatsApp for the OTP code.',
             'data' => new CustomerResource($user)
         ]);
     }
 
     public function verifyOtp(Request $request)
     {
-        return  $this->authCustomerService->verifyOtp($request);
+        return  $this->authCustomerService->verifyOtpByWhatsapp($request);
     }
 
     public function logout()

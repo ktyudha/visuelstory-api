@@ -12,9 +12,9 @@ class UserRepository extends BaseRepository
         parent::__construct($user);
     }
 
-    public function findUserAuth(string $email)
+    public function findUserAuth(string $value, string $type = 'email')
     {
-        return $this->user::where('email', $email)
+        return $this->user::where($type, $value)
             // ->where('otp', $otp)
             ->where('otp_expires_at', '>', now())
             // ->select(['id', 'email', 'name', 'otp', 'otp_expires_at'])

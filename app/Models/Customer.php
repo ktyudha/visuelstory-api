@@ -19,7 +19,7 @@ class Customer extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'phone',
+        'whatsapp',
         'address',
         'otp',
         'otp_expires_at',

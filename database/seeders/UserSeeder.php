@@ -23,6 +23,7 @@ class UserSeeder extends Seeder
 
         User::create([
             'name' => 'stefen jowo',
+            'whatsapp' => '6285848250548',
             'email' => 'stefen.jowo@gmail.com',
             'otp' => Hash::make(123456),
             'otp_expires_at' => Carbon::now()->addMonth(1),

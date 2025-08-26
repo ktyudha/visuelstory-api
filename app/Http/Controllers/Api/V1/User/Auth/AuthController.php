@@ -18,7 +18,8 @@ class AuthController extends Controller
 
     public function sendOtp(LoginRequest $request)
     {
-        $user = $this->authService->sendOTPByEmail($request);
+        // $user = $this->authService->sendOTPByEmail($request);
+        $user = $this->authService->sendOTPByWhatsApp($request);
 
         return response()->json([
             'status' => 'Success',
@@ -29,7 +30,7 @@ class AuthController extends Controller
 
     public function verifyOtp(Request $request)
     {
-        return  $this->authService->verifyOtp($request);
+        return  $this->authService->verifyOtpByWhatsapp($request);
     }
 
     public function logout()
